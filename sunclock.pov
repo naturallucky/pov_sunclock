@@ -43,22 +43,20 @@ global_settings{ assumed_gamma 1.0 }
 //camera{Camera_0}
 // sun ---------------------------------------------------------------------
 //light_source{<-1500,2000,-2500> color White}
-
-#declare clocksub = max(0,clock-.65);
-
+/*
 // sky -------------------------------------------------------------- 
 plane{<0,1,0>,1 hollow  
        texture{ pigment{ bozo turbulence 0.92
-                         color_map { [0.00 rgb <0.20, 0.20, 1.0>*0.9*(1-clocksub*2.8)]
-                                     [0.50 rgb <0.20, 0.20, 1.0>*0.9*(1-clocksub*2.8)]
-                                     [0.70 rgb <1-(max(0,clock-.7))*3.2,1-clocksub*2.85,1-clocksub*2.86>]
-                                     [0.85 rgb <0.25-(max(0,clock-.7))*.8,0.25-clocksub*.64,0.25-clocksub*.64>]
-                                     [1.0 rgb <0.5-(max(0,clock-.7))*1.4,0.5-clocksub*1.4,0.5-clocksub*1.4>]}
+                         color_map { [0.00 rgb <0.20, 0.20, 1.0>*0.9]
+                                     [0.50 rgb <0.20, 0.20, 1.0>*0.9]
+                                     [0.70 rgb <1,1,1>]
+                                     [0.85 rgb <0.25,0.25,0.25>]
+                                     [1.0 rgb <0.5,0.5,0.5>]}
                         scale<1,1,1.5>*2.5  translate< 0,0,0>
                        }
                 finish {ambient 1 diffuse 0} }      
        scale 10000}
-
+*/
 
 // fog on the ground -------------------------------------------------
 fog { fog_type   2
@@ -94,33 +92,28 @@ height_field{ png "plasma3.png" smooth double_illuminate
 } // end of height_field ----------------------------------
     
 
-sphere { <.17,1,.2> 1 
-   material{ texture { NBglass } // end of texture 
-		interior{ I_Glass } // end of interior
-   } // end of material -------------------
+cylinder { <0,0,2>,<0,1.9,0>, 0.15 
 
-   //normal { agate 0.15 scale 0.15}
-   finish { phong 0.5 } 
-
-
-} // end of cylinder -------------------------------------
-
-sphere { <1.37,.3,-0.2> .3 
-   material{M_Orange_Glass}
-   //normal { agate 0.15 scale 0.15}
-   finish { phong 0.5 } 
+             texture { T_Grnt9
+                   //normal { agate 0.15 scale 0.15}
+                   finish { phong 0.5 } 
+                   scale 1 
 
 
+                   //normal  { bumps 0.5 scale <0.005,0.25,0.005>}
+                     finish  { phong 0.5 reflection{ 0.00 metallic 0.00} } 
+                   } // end of texture
+
+           scale <1,1,1> rotate<0,0,0> translate<0,0,0>
 } // end of cylinder -------------------------------------
 
   
   
-  
-light_source{<0+(clock*2-1)*20,38*(1-clock)+6,70> color <1-max(0,clock-.7)*3.33, .6-max(0, clock-.6)*1.5,  max(0,1-clock*2)>
+light_source{<0+(clock*2-1)*20,27-abs(clock*2-1)*3,40> color <1, 0.6,  0.2>
 	spotlight
 	looks_like{
-        sphere {<0+(clock*2-1)*20,38*(1-clock)+6,70>, 3
-           texture {finish {ambient 1} pigment{color <1-max(0,clock-.7)*3.33, .6-max(0, clock-.6)*1.5,  max(0,1-clock*2)>}}
+        sphere {<0+(clock*2-1)*20,27-abs(clock*2-1)*3,40>, 3
+           texture {finish {ambient 1} pigment{color <1, 0.6,  0.2>}}
         } 
     }
 }
@@ -159,3 +152,15 @@ object{
 	rotate  y*-15
 }
 
+object{
+	stone 
+	translate  <-3.1,0,0>
+	scale 1.2
+	rotate  y*30
+}
+
+object{
+	stone 
+	translate  <0,0,-5.8>
+	scale .6
+}
